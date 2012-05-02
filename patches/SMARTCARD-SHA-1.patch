@@ -1,0 +1,35 @@
+From 89b807b317d37384b687ce3e35ebf282617eb4af Mon Sep 17 00:00:00 2001
+From: Pim Vullers <pim@vullersmail.nl>
+Date: Wed, 25 Apr 2012 12:44:36 +0200
+Subject: [PATCH 4/5] SMARTCARD specific modification: SHA-256 is not
+ supported, hence use SHA-1 instead
+
+---
+ src/com/ibm/zurich/idmx/utils/Utils.java |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/src/com/ibm/zurich/idmx/utils/Utils.java b/src/com/ibm/zurich/idmx/utils/Utils.java
+index 09be1a0..6f38946 100644
+--- a/src/com/ibm/zurich/idmx/utils/Utils.java
++++ b/src/com/ibm/zurich/idmx/utils/Utils.java
+@@ -48,13 +48,15 @@ public class Utils {
+     private static final int BIG_INTEGER_VISUALISATION_LENGTH = 12;
+ 
+     /** Digest used. */
+-    public static final String DIGEST_METHOD = "SHA-256";
++    // SMARTCARD: SHA-256 is not supported, hence use SHA-1 instead
++    public static final String DIGEST_METHOD = "SHA-1";
+ 
+     /** Number of bits per byte. */
+     public static final int BYTE_BIT_LENGTH = 8;
+ 
+     /** Bit length of a SHA-256 hash. */
+-    private static final int SHA_BIT_LENGTH = 256;
++    // SMARTCARD: SHA-256 is not supported, hence use SHA-1 instead
++    private static final int SHA_BIT_LENGTH = 160;
+ 
+     /**
+      * If set to true, the optimised methods for modular exponentiations are
+-- 
+1.7.8.5
+

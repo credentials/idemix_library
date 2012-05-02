@@ -1,0 +1,24 @@
+From a717348a8a7d8b2eb09e4ec8fcd94327d3a1ba7b Mon Sep 17 00:00:00 2001
+From: Pim Vullers <pim@vullersmail.nl>
+Date: Tue, 1 May 2012 17:02:21 +0200
+Subject: [PATCH] Fixed proving protocol nonce length
+
+---
+ src/com/ibm/zurich/idmx/showproof/Verifier.java |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/com/ibm/zurich/idmx/showproof/Verifier.java b/src/com/ibm/zurich/idmx/showproof/Verifier.java
+index 88e3eb1..6ce2a16 100644
+--- a/src/com/ibm/zurich/idmx/showproof/Verifier.java
++++ b/src/com/ibm/zurich/idmx/showproof/Verifier.java
+@@ -718,6 +718,6 @@ public class Verifier {
+      * @return Verifier's nonce.
+      */
+     public static BigInteger getNonce(final SystemParameters sp) {
+-        return Utils.computeRandomNumberSymmetric(sp.getL_m());
++        return Utils.computeRandomNumberSymmetric(sp.getL_Phi());
+     }
+ }
+-- 
+1.7.8.5
+

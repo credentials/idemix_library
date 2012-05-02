@@ -1,0 +1,79 @@
+From 56ac3a13b3b7077ab441cf4b85c4d02f28ea6958 Mon Sep 17 00:00:00 2001
+From: Pim Vullers <pim@vullersmail.nl>
+Date: Wed, 25 Apr 2012 12:42:31 +0200
+Subject: [PATCH 3/5] Fix unsigned byte array interpretation when converting
+ to BigInteger
+
+---
+ src/com/ibm/zurich/credsystem/utils/Utils.java |    2 +-
+ src/com/ibm/zurich/idmx/dm/MessageToSign.java  |    2 +-
+ src/com/ibm/zurich/idmx/utils/Utils.java       |    8 ++++----
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/src/com/ibm/zurich/credsystem/utils/Utils.java b/src/com/ibm/zurich/credsystem/utils/Utils.java
+index 9c6abfb..9037e39 100644
+--- a/src/com/ibm/zurich/credsystem/utils/Utils.java
++++ b/src/com/ibm/zurich/credsystem/utils/Utils.java
+@@ -189,6 +189,6 @@ public class Utils extends com.ibm.zurich.idmx.utils.Utils{
+             log.log(Level.SEVERE, "Error calculating hash of string: ", e);
+             throw new RuntimeException("Digest error");
+         }
+-        return new BigInteger(byteArray);
++        return new BigInteger(1, byteArray);
+     }
+ }
+diff --git a/src/com/ibm/zurich/idmx/dm/MessageToSign.java b/src/com/ibm/zurich/idmx/dm/MessageToSign.java
+index 137f3f1..4a8df52 100644
+--- a/src/com/ibm/zurich/idmx/dm/MessageToSign.java
++++ b/src/com/ibm/zurich/idmx/dm/MessageToSign.java
+@@ -75,6 +75,6 @@ public class MessageToSign {
+                     + ") hashLen=" + hashLen);
+         }
+ 
+-        return new BigInteger(byteArray);
++        return new BigInteger(1, byteArray);
+     }
+ }
+diff --git a/src/com/ibm/zurich/idmx/utils/Utils.java b/src/com/ibm/zurich/idmx/utils/Utils.java
+index 1407ea5..09be1a0 100644
+--- a/src/com/ibm/zurich/idmx/utils/Utils.java
++++ b/src/com/ibm/zurich/idmx/utils/Utils.java
+@@ -626,7 +626,7 @@ public class Utils {
+             throw new RuntimeException("Digest error (" + e.getMessage()
+                     + ") hashLen=" + hashLen);
+         }
+-        return new BigInteger(byteArray);
++        return new BigInteger(1, byteArray);
+     }
+ 
+     /**
+@@ -674,7 +674,7 @@ public class Utils {
+             log.log(Level.SEVERE, "Error calculating ASN1 hash", e);
+             throw new RuntimeException("Digest error");
+         }
+-        return new BigInteger(byteArray);
++        return new BigInteger(1, byteArray);
+     }
+ 
+     public static BigInteger hashOf(final int l_H, final Vector<BigInteger> list) {
+@@ -711,7 +711,7 @@ public class Utils {
+             log.log(Level.SEVERE, "Error calculating ASN1 hash", e);
+             throw new RuntimeException("Digest error");
+         }
+-        return new BigInteger(byteArray);
++        return new BigInteger(1, byteArray);
+     }
+ 
+     /**
+@@ -1394,7 +1394,7 @@ public class Utils {
+             log.log(Level.SEVERE, "Error calculating hash of string: ", e);
+             throw new RuntimeException("Digest error");
+         }
+-        return new BigInteger(byteArray);
++        return new BigInteger(1, byteArray);
+     }
+ 
+     /**
+-- 
+1.7.8.5
+

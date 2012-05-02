@@ -1,0 +1,27 @@
+From b8e818b95d4452a5bdeb96c942b609a71b79de44 Mon Sep 17 00:00:00 2001
+From: Pim Vullers <pim@vullersmail.nl>
+Date: Wed, 25 Apr 2012 12:50:03 +0200
+Subject: [PATCH 5/5] SMARTCARD specific modification: Negative values are not
+ supported, hence do not negate
+
+---
+ src/com/ibm/zurich/idmx/utils/Utils.java |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/src/com/ibm/zurich/idmx/utils/Utils.java b/src/com/ibm/zurich/idmx/utils/Utils.java
+index 6f38946..82888f1 100644
+--- a/src/com/ibm/zurich/idmx/utils/Utils.java
++++ b/src/com/ibm/zurich/idmx/utils/Utils.java
+@@ -248,7 +248,8 @@ public class Utils {
+         final boolean flipSignBit = random.nextBoolean();
+         if (flipSignBit) {
+             // randomly negate temp
+-            temp = temp.negate();
++            // SMARTCARD: Negative values are not supported, hence do not negate
++            //temp = temp.negate();
+         }
+ 
+         // -2^bitlength+1 <= temp <= 2^bitlength-1
+-- 
+1.7.8.5
+
