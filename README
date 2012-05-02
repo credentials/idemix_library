@@ -1,15 +1,9 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%                  Identity Mixer Library v2.3.2                  %%
-%%                               by                                %%
-%%                       IBM Research Zurich                       %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Patches for IBM's Identity Mixer library.
 
-This is the Identity Mixer library. To get started look at the 
-index.html which is located within 'doc/getting_started'. This file
-is compatible with Firefox. 
-Alternatively you can go to:
-http://www.zurich.ibm.com/~pbi/identityMixer_gettingStarted/
-(compatible with all modern browsers).
+The license of the Identity Mixer library (LICENSE.Identity_Mixer) does not
+allow us to distribute the patched library. Hence we use this repository to
+maintain the required patches to use the library in combination with smart
+cards.
 
-Comments and suggestions about the library are welcome and should be 
-sent to 'idemix@zurich.ibm.com'.
+In order to use these patches you will have to download the sources yourself
+from the Identity Mixer homepage (https://prime.inf.tu-dresden.de/idemix/).
