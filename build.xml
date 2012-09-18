@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project name="Idemix cryptographic library" default="all">
+  
+  <property file="build.properties" />
+
+  <path id="classpath">
+    <pathelement path="${lib.dir}/*.jar" />
+  </path>
+
+  <target name="clean">
+    <delete dir="${bin.dir}" />
+    <!-- <delete dir="${jar.dir}" includes="*.jar" /> -->
+  </target>
+
+  <target name="compile">
+    <mkdir dir="${bin.dir}" />
+    <javac srcdir="${src.dir}" destdir="${bin.dir}" includeantruntime="false">
+       <classpath refid="classpath" />
+    </javac>
+  </target>
+
+  <target name="archive" depends="compile">
+    <jar destfile="${jar.dir}/${jar.archive}">
+      <fileset dir="${bin.dir}" />
+      <fileset dir="${src.dir}" />
+    </jar>
+  </target>
+
+  <target name="library" depends="compile">
+    <jar destfile="${jar.library.dir}/${jar.library}">
+        
+      <fileset dir="${bin.dir}" />
+      
+    </jar>
+
+    <!-- <signjar jar="${jar.library.dir}/${jar.library}" alias="${key.alias}" storepass="${key.storepass}" keystore="${key.store}" /> -->
+  </target>
+  
+  <target name="all" depends="archive,library" />
+</project>
