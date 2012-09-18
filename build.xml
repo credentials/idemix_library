@@ -7,9 +7,27 @@
     <pathelement path="${lib.dir}/*.jar" />
   </path>
 
+  <target name="prepare">
+    <unzip src="${idemix.archive}" dest="." />
+
+    <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/BUG-proving-nonce-length.patch" />
+    <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/BUG-unsigned-byte-array-interpretation.patch" />
+    <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/FEATURE-allow-inputstream-as-input.patch" />
+    <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/SMARTCARD-SHA-1.patch" />
+    <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/SMARTCARD-negative-values.patch" />
+
+    <copy file="${eclipse.dir}/.project" todir="${idemix.dir}" />
+  </target>
+
   <target name="clean">
     <delete dir="${bin.dir}" />
-    <!-- <delete dir="${jar.dir}" includes="*.jar" /> -->
+  </target>
+
+  <target name="distclean">
+    <delete dir="${idemix.dir}" />
+    <delete file="${idemix.archive}" />
+    <delete file="${jar.dir}/{jar.library}" />
+    <delete file="${jar.dir}/{jar.archive}" />
   </target>
 
   <target name="compile">

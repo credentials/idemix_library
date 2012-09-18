@@ -3,6 +3,9 @@ doc
 files
 src
 tests
-*.bin
 .classpath
 .project
+
+*.bin
+*.zip
+com.ibm.zurich.idmx.*

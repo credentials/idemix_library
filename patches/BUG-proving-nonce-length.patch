@@ -11,7 +11,7 @@ diff --git a/src/com/ibm/zurich/idmx/showproof/Verifier.java b/src/com/ibm/zuric
 index 88e3eb1..6ce2a16 100644
 --- a/src/com/ibm/zurich/idmx/showproof/Verifier.java
 +++ b/src/com/ibm/zurich/idmx/showproof/Verifier.java
-@@ -718,6 +718,6 @@ public class Verifier {
+@@ -727,6 +727,6 @@ public class Verifier {
       * @return Verifier's nonce.
       */
      public static BigInteger getNonce(final SystemParameters sp) {
