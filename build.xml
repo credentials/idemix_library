@@ -15,6 +15,7 @@
     <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/FEATURE-allow-inputstream-as-input.patch" />
     <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/SMARTCARD-SHA-1.patch" />
     <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/SMARTCARD-negative-values.patch" />
+    <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/SMARTCARD-test-files.patch" />
 
     <copy file="${eclipse.dir}/.project" todir="${idemix.dir}" />
   </target>
@@ -23,7 +24,7 @@
     <delete dir="${bin.dir}" />
   </target>
 
-  <target name="distclean">
+  <target name="distclean" depends="clean">
     <delete dir="${idemix.dir}" />
     <delete file="${idemix.archive}" />
     <delete file="${jar.dir}/{jar.library}" />
