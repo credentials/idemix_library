@@ -9,3 +9,4 @@ tests
 *.bin
 *.zip
 com.ibm.zurich.idmx.*
+idemix_library.*jar
