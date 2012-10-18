@@ -3,10 +3,6 @@
   
   <property file="build.properties" />
 
-  <path id="classpath">
-    <pathelement path="${lib.dir}/*.jar" />
-  </path>
-
   <target name="prepare">
     <unzip src="${idemix.archive}" dest="." />
 

@@ -8,7 +8,7 @@ cards.
 In order to use these patches you will have to download the sources yourself
 from the Identity Mixer homepage (https://prime.inf.tu-dresden.de/idemix/).
 
-Place the downloaded archive (IdentityMixer-2.3.4.zip) in this directory. To
+Place the downloaded archive (IdentityMixer_2-3-4.zip) in this directory. To
 prepare the sources, that is apply the patches, run:
 
     ant prepare
