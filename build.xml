@@ -13,7 +13,9 @@
     <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/SMARTCARD-negative-values.patch" />
     <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/SMARTCARD-test-files.patch" />
 
-    <copy file="${eclipse.dir}/.project" todir="${idemix.dir}" />
+    <copy todir="${idemix.dir}">
+      <fileset dir="${eclipse.dir}" />
+    </copy>
   </target>
 
   <target name="clean">
