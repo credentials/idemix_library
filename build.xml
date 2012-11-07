@@ -30,9 +30,7 @@
 
   <target name="compile">
     <mkdir dir="${bin.dir}" />
-    <javac srcdir="${src.dir}" destdir="${bin.dir}" includeantruntime="false">
-       <classpath refid="classpath" />
-    </javac>
+    <javac srcdir="${src.dir}" destdir="${bin.dir}" includeantruntime="false" />
   </target>
 
   <target name="archive">
