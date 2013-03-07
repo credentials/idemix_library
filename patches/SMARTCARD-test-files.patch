@@ -74,7 +74,7 @@ diff --git a/files/parameter/sp.xml b/files/parameter/sp.xml
 index 7cd2a0b..176c25c 100644
 --- a/files/parameter/sp.xml
 +++ b/files/parameter/sp.xml
-@@ -5,10 +5,10 @@
+@@ -5,7 +5,7 @@
  	xsi:schemaLocation="http://www.zurich.ibm.com/security/idemix SystemParameters.xsd">
  	
  	<Elements>
@@ -82,11 +82,7 @@ index 7cd2a0b..176c25c 100644
 +		<l_e>504</l_e>
  		<l_ePrime>120</l_ePrime>
  		<l_Gamma>768</l_Gamma>
--		<l_H>256</l_H>
-+		<l_H>160</l_H>
- 		<l_k>160</l_k>
- 		<l_m>256</l_m>
- 		<l_n>1024</l_n>
+ 		<l_H>256</l_H>
 @@ -17,7 +17,7 @@
  		<l_r>80</l_r>
  		<l_res>1</l_res>
