@@ -11,7 +11,7 @@
     <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/FEATURE-allow-inputstream-as-input.patch" />
     <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/SMARTCARD-negative-values.patch" />
     <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/SMARTCARD-test-files.patch" />
-    <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/SMARTCARD-SHA-1-padded" />
+    <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/SMARTCARD-SHA-1-padded.patch" />
 
     <copy todir="${idemix.dir}">
       <fileset dir="${eclipse.dir}" />
