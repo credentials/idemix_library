@@ -1,0 +1,48 @@
+diff -Naur com.orig/src/com/ibm/zurich/idmx/utils/Utils.java com.ibm.zurich.idmx.2_3_4/src/com/ibm/zurich/idmx/utils/Utils.java
+--- com.orig/src/com/ibm/zurich/idmx/utils/Utils.java	2013-03-21 10:45:25.323793981 +0100
++++ com.ibm.zurich.idmx.2_3_4/src/com/ibm/zurich/idmx/utils/Utils.java	2013-03-21 10:50:09.026774581 +0100
+@@ -48,7 +48,7 @@
+     private static final int BIG_INTEGER_VISUALISATION_LENGTH = 12;
+ 
+     /** Digest used. */
+-    public static final String DIGEST_METHOD = "SHA-256";
++    public static final String DIGEST_METHOD = "SHA-1";
+ 
+     /** Number of bits per byte. */
+     public static final int BYTE_BIT_LENGTH = 8;
+@@ -620,7 +620,10 @@
+         final byte[] preImage = str.getBytes();
+         digest.update(preImage, 0, preImage.length);
+ 
+-        final byte[] byteArray = new byte[hashLen];
++        byte[] byteArray = new byte[hashLen];
++        for (int i = 0; i < hashLen; i++) {
++        	byteArray[i] = (byte) (i & 0xff);
++        }
+         try {
+             digest.digest(byteArray, 0, hashLen);
+         } catch (Exception e) {
+@@ -668,7 +671,10 @@
+ 
+         digest.update(asn1representation, 0, asn1representation.length);
+ 
+-        final byte[] byteArray = new byte[hashLen];
++        byte[] byteArray = new byte[hashLen];
++        for (int i = 0; i < hashLen; i++) {
++        	byteArray[i] = (byte) (i & 0xff);
++        }
+         try {
+             digest.digest(byteArray, 0, hashLen);
+         } catch (Exception e) {
+@@ -705,7 +711,10 @@
+         final byte[] asn1representation = idemix_asn.encode(array);
+         digest.update(asn1representation, 0, asn1representation.length);
+ 
+-        final byte[] byteArray = new byte[hashLen];
++        byte[] byteArray = new byte[hashLen];
++        for (int i = 0; i < hashLen; i++) {
++        	byteArray[i] = (byte) (i & 0xff);
++        }
+         try {
+             digest.digest(byteArray, 0, hashLen);
+         } catch (Exception e) {
