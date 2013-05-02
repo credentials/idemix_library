@@ -35,6 +35,8 @@
     <delete dir="${tests.dir}" />
     <delete dir="${doc.dir}" />
     <delete dir="${files.dir}" />
+    <delete file=".project" />
+    <delete file=".classpath" />
     <delete file="${idemix.archive}" />
     <delete file="${jar.development.dir}/${jar.development.archive}" />
     <delete file="${jar.library.dir}/${jar.library.archive}" />
