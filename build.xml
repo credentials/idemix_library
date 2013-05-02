@@ -6,13 +6,22 @@
   <target name="prepare">
     <unzip src="${idemix.archive}" dest="." />
 
-    <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/BUG-proving-nonce-length.patch" />
-    <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/BUG-unsigned-byte-array-interpretation.patch" />
-    <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/FEATURE-allow-inputstream-as-input.patch" />
-    <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/SMARTCARD-negative-values.patch" />
-    <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/SMARTCARD-test-files.patch" />
+    <mkdir dir="${doc.dir}" />
+    <move todir="${doc.dir}">
+      <filelist>
+        <file name="Identity Mixer License 1.2.doc" />
+        <file name="ProtocolSpecification.pdf" />
+        <file name="_classpath" />
+        <file name="_project" />
+      </filelist>
+    </move>
 
-    <copy todir="${idemix.dir}">
+    <patch strip="1" patchfile="${patch.dir}/BUG-proving-nonce-length.patch" />
+    <patch strip="1" patchfile="${patch.dir}/BUG-unsigned-byte-array-interpretation.patch" />
+    <patch strip="1" patchfile="${patch.dir}/FEATURE-allow-inputstream-as-input.patch" />
+    <patch strip="1" patchfile="${patch.dir}/SMARTCARD-negative-values.patch" />
+
+    <copy todir=".">
       <fileset dir="${eclipse.dir}" />
     </copy>
   </target>
@@ -22,7 +31,10 @@
   </target>
 
   <target name="distclean" depends="clean">
-    <delete dir="${idemix.dir}" />
+    <delete dir="${src.dir}" />
+    <delete dir="${tests.dir}" />
+    <delete dir="${doc.dir}" />
+    <delete dir="${files.dir}" />
     <delete file="${idemix.archive}" />
     <delete file="${jar.development.dir}/${jar.development.archive}" />
     <delete file="${jar.library.dir}/${jar.library.archive}" />

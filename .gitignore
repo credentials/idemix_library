@@ -3,6 +3,7 @@ doc
 files
 src
 tests
+tests-no-easymock
 .classpath
 .project
 

@@ -5,23 +5,10 @@ Subject: [PATCH 3/6] Fix unsigned byte array interpretation when converting
  to BigInteger
 
 ---
- src/com/ibm/zurich/credsystem/utils/Utils.java |    2 +-
  src/com/ibm/zurich/idmx/dm/MessageToSign.java  |    2 +-
  src/com/ibm/zurich/idmx/utils/Utils.java       |    4 ++--
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/src/com/ibm/zurich/credsystem/utils/Utils.java b/src/com/ibm/zurich/credsystem/utils/Utils.java
-index 9c6abfb..9037e39 100644
---- a/src/com/ibm/zurich/credsystem/utils/Utils.java
-+++ b/src/com/ibm/zurich/credsystem/utils/Utils.java
-@@ -189,6 +189,6 @@ public class Utils extends com.ibm.zurich.idmx.utils.Utils{
-             log.log(Level.SEVERE, "Error calculating hash of string: ", e);
-             throw new RuntimeException("Digest error");
-         }
--        return new BigInteger(byteArray);
-+        return new BigInteger(1, byteArray);
-     }
- }
 diff --git a/src/com/ibm/zurich/idmx/dm/MessageToSign.java b/src/com/ibm/zurich/idmx/dm/MessageToSign.java
 index 137f3f1..8194a02 100644
 --- a/src/com/ibm/zurich/idmx/dm/MessageToSign.java

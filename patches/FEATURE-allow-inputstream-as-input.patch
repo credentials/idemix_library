@@ -1,48 +1,36 @@
-From c013bbc63eb439cfa2540b7e49c13fe63e085b67 Mon Sep 17 00:00:00 2001
-From: Wouter Lueks <wouter@telox.net>
-Date: Wed, 25 Jul 2012 14:23:05 +0200
-Subject: [PATCH 4/4] Also allow InputStreams as inputs
-
----
- src/com/ibm/zurich/idmx/utils/Parser.java         |   11 ++++++++
- src/com/ibm/zurich/idmx/utils/StructureStore.java |   29 +++++++++++++++++++++
- 2 files changed, 40 insertions(+), 0 deletions(-)
-
-diff --git a/src/com/ibm/zurich/idmx/utils/Parser.java b/src/com/ibm/zurich/idmx/utils/Parser.java
-index b931d08..409ff5b 100644
---- a/src/com/ibm/zurich/idmx/utils/Parser.java
-+++ b/src/com/ibm/zurich/idmx/utils/Parser.java
-@@ -403,6 +403,17 @@ public class Parser {
-     }
+diff -Naur src/com/ibm/zurich/idmx/utils/Parser.java src.patched/com/ibm/zurich/idmx/utils/Parser.java
+--- a/src/com/ibm/zurich/idmx/utils/Parser.java	2013-04-30 15:37:20.000000000 +0200
++++ b/src/com/ibm/zurich/idmx/utils/Parser.java	2013-05-02 12:24:36.331413481 +0200
+@@ -408,6 +408,17 @@
+   }
  
-     /**
-+     * Parses XML from an InputStream.
-+     * @param stream InputStream whose data should be parsed.
-+     * @return
-+     */
-+    public final Object parse(InputStream stream) {
-+        InputSource is = new InputSource();
-+        is.setByteStream(stream);
-+        return parse(is);
-+    }
+   /**
++   * Parses XML from an InputStream.
++   * @param stream InputStream whose data should be parsed.
++   * @return
++   */
++  public final Object parse(InputStream stream) {
++      InputSource is = new InputSource();
++      is.setByteStream(stream);
++      return parse(is);
++  }
 +
-+    /**
-      * @param inputSource
-      *            Input source containing the XML that is to be parsed.
-      * @return Element of the type as specified in the given XML file.
-diff --git a/src/com/ibm/zurich/idmx/utils/StructureStore.java b/src/com/ibm/zurich/idmx/utils/StructureStore.java
-index 3406304..d2d50b2 100644
---- a/src/com/ibm/zurich/idmx/utils/StructureStore.java
-+++ b/src/com/ibm/zurich/idmx/utils/StructureStore.java
-@@ -3,6 +3,7 @@
-  */
++  /**
+    * @param inputSource Input source containing the XML that is to be parsed.
+    * @return Element of the type as specified in the given XML file.
+    */
+diff -Naur src/com/ibm/zurich/idmx/utils/StructureStore.java src.patched/com/ibm/zurich/idmx/utils/StructureStore.java
+--- a/src/com/ibm/zurich/idmx/utils/StructureStore.java	2013-04-30 15:37:20.000000000 +0200
++++ b/src/com/ibm/zurich/idmx/utils/StructureStore.java	2013-05-02 12:25:37.715409284 +0200
+@@ -6,6 +6,7 @@
+ //*/**/****************************************************************
  package com.ibm.zurich.idmx.utils;
  
 +import java.io.InputStream;
  import java.net.URI;
  import java.util.HashMap;
  
-@@ -47,6 +48,26 @@ public final class StructureStore {
+@@ -56,6 +57,26 @@
          return get(objectName.toString(), objectName);
      }
  
@@ -69,7 +57,7 @@ index 3406304..d2d50b2 100644
      /**
       * @param objectName
       *            Name of a structural element (e.g., credential structure,
-@@ -77,6 +98,14 @@ public final class StructureStore {
+@@ -90,6 +111,14 @@
      }
  
      /**
@@ -84,6 +72,3 @@ index 3406304..d2d50b2 100644
       * Removes a URI from the store of structures. This method is needed when a
       * wrong secret key is loaded.
       * 
--- 
-1.7.4.4
-
