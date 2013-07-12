@@ -9,8 +9,11 @@
     <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/BUG-proving-nonce-length.patch" />
     <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/BUG-unsigned-byte-array-interpretation.patch" />
     <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/FEATURE-allow-inputstream-as-input.patch" />
+    <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/FEATURE-context-as-parameter.patch" />
+    <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/FEATURE-nonce-as-parameter.patch" />
     <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/SMARTCARD-negative-values.patch" />
     <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/SMARTCARD-test-files.patch" />
+    <patch dir="${idemix.dir}" strip="1" patchfile="${patch.dir}/BUG-missing-default-case.patch" />
 
     <copy todir="${idemix.dir}">
       <fileset dir="${eclipse.dir}" />

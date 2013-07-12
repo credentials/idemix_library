@@ -1,0 +1,71 @@
+diff -Naur a/src/com/ibm/zurich/idmx/issuance/IssuanceSpec.java b/src/com/ibm/zurich/idmx/issuance/IssuanceSpec.java
+--- a/src/com/ibm/zurich/idmx/issuance/IssuanceSpec.java	2012-02-06 11:31:44.000000000 +0100
++++ b/src/com/ibm/zurich/idmx/issuance/IssuanceSpec.java	2013-07-12 12:39:20.000000000 +0200
+@@ -58,6 +58,12 @@
+         pubKey = (IssuerPublicKey) StructureStore.getInstance().get(
+                 issuerPublicKeyId);
+     }
++    
++    public IssuanceSpec(final URI ipkId, final URI theCredStructLocation, BigInteger ctx) {
++    	this(ipkId, theCredStructLocation);
++    	
++    	context = ctx;
++    }
+ 
+     /**
+      * @return Location of the credential structure.
+diff -Naur a/src/com/ibm/zurich/idmx/showproof/ProofSpec.java b/src/com/ibm/zurich/idmx/showproof/ProofSpec.java
+--- a/src/com/ibm/zurich/idmx/showproof/ProofSpec.java	2013-05-08 11:20:09.479102077 +0200
++++ b/src/com/ibm/zurich/idmx/showproof/ProofSpec.java	2013-07-12 17:30:28.356519799 +0200
+@@ -31,6 +31,8 @@
+     /** Predicates. */
+     private final Vector<Predicate> predicates;
+ 
++    private final BigInteger context;
++    
+     /**
+      * Constructor for proof specifications. Null arguments are initialized as
+      * length zero Vectors. The credentials will be cleared of private
+@@ -43,11 +45,22 @@
+      */
+     public ProofSpec(final HashMap<String, Identifier> theIdentifierMap,
+             final Vector<Predicate> thePredicates) {
++    	this(theIdentifierMap, thePredicates, null);
++    }
++
++    public ProofSpec(final HashMap<String, Identifier> theIdentifierMap,
++            final Vector<Predicate> thePredicates, final BigInteger ctx) {
+         assert (thePredicates != null);
+ 
+         predicates = thePredicates;
+         identifierMap = theIdentifierMap;
+ 
++        if (ctx == null) {
++        	context = createContext();
++        } else {
++        	context = ctx;
++        }
++
+         validate();
+     }
+ 
+@@ -153,7 +166,7 @@
+      * 
+      * @return value of spec's context.
+      */
+-    public final BigInteger getContext() {
++    public final BigInteger createContext() {
+         Vector<BigInteger> contextVector = new Vector<BigInteger>();
+ 
+         // add values of group parametes
+@@ -173,6 +186,10 @@
+         return Utils.hashOf(gp.getSystemParams().getL_H(), contextVector);
+     }
+ 
++    public final BigInteger getContext() {
++    	return context;
++    }
++    
+     /**
+      * @return Human-readable description of this object.
+      */

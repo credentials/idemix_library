@@ -1,0 +1,57 @@
+diff -Naur a/src/com/ibm/zurich/idmx/issuance/Issuer.java b/src/com/ibm/zurich/idmx/issuance/Issuer.java
+--- a/src/com/ibm/zurich/idmx/issuance/Issuer.java	2012-02-06 11:31:44.000000000 +0100
++++ b/src/com/ibm/zurich/idmx/issuance/Issuer.java	2013-07-12 12:36:06.000000000 +0200
+@@ -71,9 +71,22 @@
+      */
+     public Issuer(final IssuerKeyPair issuerKey,
+             final IssuanceSpec issuanceSpec, final Values theValues) {
+-        this(issuerKey, issuanceSpec, null, null, theValues);
++        this(issuerKey, issuanceSpec, null, null, theValues, 
++        		Utils.computeRandomNumber(issuerKey.getPublicKey().getGroupParams().getSystemParams().getL_Phi()));
++    }
++    
++    public Issuer(final IssuerKeyPair issuerKey,
++            final IssuanceSpec issuanceSpec, final BigInteger pseudonym,
++            final DomNym theDomNym, final Values theValues) {
++    	this(issuerKey, issuanceSpec, null, null, theValues, 
++    			Utils.computeRandomNumber(issuerKey.getPublicKey().getGroupParams().getSystemParams().getL_Phi()));
+     }
+ 
++    public Issuer(final IssuerKeyPair issuerKey,
++            final IssuanceSpec issuanceSpec, final Values theValues, final BigInteger nonce) {
++        this(issuerKey, issuanceSpec, null, null, theValues, nonce);
++    }
++    
+     /**
+      * Create an Issuer, to issue a credential to a Recipient.
+      * 
+@@ -91,7 +104,7 @@
+      */
+     public Issuer(final IssuerKeyPair issuerKey,
+             final IssuanceSpec issuanceSpec, final BigInteger pseudonym,
+-            final DomNym theDomNym, final Values theValues) {
++            final DomNym theDomNym, final Values theValues, final BigInteger nonce) {
+         super();
+ 
+         gp = issuerKey.getPublicKey().getGroupParams();
+@@ -104,6 +117,11 @@
+ 
+         certStruct = spec.getCredentialStructure();
+         values = theValues;
++        
++        if (nonce.bitLength() != sp.getL_Phi()) {
++        	throw new IllegalArgumentException("Nonce has wrong size");
++        }
++        nonce1 = nonce;
+ 
+         if (!certStruct.verifyIssuerValues(values)) {
+             throw new IllegalArgumentException("Values given to the "
+@@ -117,7 +135,7 @@
+      */
+     public final BigInteger getNonce1() {
+         // choose a random nonce n1 \in {0,1}^l_Phi.
+-        nonce1 = Utils.computeRandomNumber(sp.getL_Phi());
++        //nonce1 = Utils.computeRandomNumber(sp.getL_Phi());
+         return nonce1;
+     }
+ 

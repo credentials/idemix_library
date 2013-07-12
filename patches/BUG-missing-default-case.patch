@@ -1,0 +1,12 @@
+diff -Naur a/src/com/ibm/zurich/idmx/showproof/ProofSpec.java b/src/com/ibm/zurich/idmx/showproof/ProofSpec.java
+--- a/src/com/ibm/zurich/idmx/showproof/ProofSpec.java	2013-07-12 17:55:39.055567122 +0200
++++ b/src/com/ibm/zurich/idmx/showproof/ProofSpec.java	2013-07-12 17:30:28.356519799 +0200
+@@ -156,6 +156,8 @@
+             switch (pred.getPredicateType()) {
+             case CL:
+                 credTempNames.add(((CLPredicate) pred).getTempCredName());
++			default:
++				break;
+             }
+         }
+         return credTempNames;
