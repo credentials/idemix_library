@@ -1,21 +1,16 @@
 diff -Naur a/src/com/ibm/zurich/idmx/issuance/Issuer.java b/src/com/ibm/zurich/idmx/issuance/Issuer.java
 --- a/src/com/ibm/zurich/idmx/issuance/Issuer.java	2012-02-06 11:31:44.000000000 +0100
-+++ b/src/com/ibm/zurich/idmx/issuance/Issuer.java	2013-07-12 12:36:06.000000000 +0200
-@@ -71,9 +71,22 @@
-      */
-     public Issuer(final IssuerKeyPair issuerKey,
++++ b/src/com/ibm/zurich/idmx/issuance/Issuer.java	2013-07-26 15:34:09.182224852 +0200
+@@ -73,7 +73,18 @@
              final IssuanceSpec issuanceSpec, final Values theValues) {
--        this(issuerKey, issuanceSpec, null, null, theValues);
-+        this(issuerKey, issuanceSpec, null, null, theValues, 
-+        		Utils.computeRandomNumber(issuerKey.getPublicKey().getGroupParams().getSystemParams().getL_Phi()));
-+    }
+         this(issuerKey, issuanceSpec, null, null, theValues);
+     }
 +    
 +    public Issuer(final IssuerKeyPair issuerKey,
 +            final IssuanceSpec issuanceSpec, final BigInteger pseudonym,
 +            final DomNym theDomNym, final Values theValues) {
-+    	this(issuerKey, issuanceSpec, null, null, theValues, 
-+    			Utils.computeRandomNumber(issuerKey.getPublicKey().getGroupParams().getSystemParams().getL_Phi()));
-     }
++    	this(issuerKey, issuanceSpec, null, null, theValues, null);
++    }
  
 +    public Issuer(final IssuerKeyPair issuerKey,
 +            final IssuanceSpec issuanceSpec, final Values theValues, final BigInteger nonce) {
@@ -25,7 +20,7 @@ diff -Naur a/src/com/ibm/zurich/idmx/issuance/Issuer.java b/src/com/ibm/zurich/i
      /**
       * Create an Issuer, to issue a credential to a Recipient.
       * 
-@@ -91,7 +104,7 @@
+@@ -91,7 +102,7 @@
       */
      public Issuer(final IssuerKeyPair issuerKey,
              final IssuanceSpec issuanceSpec, final BigInteger pseudonym,
@@ -34,24 +29,43 @@ diff -Naur a/src/com/ibm/zurich/idmx/issuance/Issuer.java b/src/com/ibm/zurich/i
          super();
  
          gp = issuerKey.getPublicKey().getGroupParams();
-@@ -104,6 +117,11 @@
+@@ -104,7 +115,18 @@
  
          certStruct = spec.getCredentialStructure();
          values = theValues;
 +        
-+        if (nonce.bitLength() != sp.getL_Phi()) {
-+        	throw new IllegalArgumentException("Nonce has wrong size");
-+        }
-+        nonce1 = nonce;
++        if (nonce != null) {
++        	if (nonce.bitLength() > sp.getL_Phi()) {
++        		throw new IllegalArgumentException("Nonce has wrong size: " + nonce.bitLength() + ">" + sp.getL_Phi());
++        	}
  
++        	nonce1 = nonce;
++        } else {
++        	// choose a random nonce n1 \in {0,1}^l_Phi.
++        	nonce1 = Utils.computeRandomNumber(sp.getL_Phi());
++        }
++        
          if (!certStruct.verifyIssuerValues(values)) {
              throw new IllegalArgumentException("Values given to the "
-@@ -117,7 +135,7 @@
+                     + "issuer do not correspond to the credential "
+@@ -116,8 +138,6 @@
+      * @return Random nonce n1.
       */
      public final BigInteger getNonce1() {
-         // choose a random nonce n1 \in {0,1}^l_Phi.
+-        // choose a random nonce n1 \in {0,1}^l_Phi.
 -        nonce1 = Utils.computeRandomNumber(sp.getL_Phi());
-+        //nonce1 = Utils.computeRandomNumber(sp.getL_Phi());
          return nonce1;
      }
  
+@@ -592,4 +612,11 @@
+ 
+         return new Message(issuanceProtocolValues, p2);
+     }
++
++    /**
++     * Set the nonce to be used by the Issuer.
++     */
++    public void setNonce(BigInteger nonce) {
++        nonce1 = nonce;
++    }
+ }

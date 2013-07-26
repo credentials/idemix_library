@@ -1,71 +1,83 @@
 diff -Naur a/src/com/ibm/zurich/idmx/issuance/IssuanceSpec.java b/src/com/ibm/zurich/idmx/issuance/IssuanceSpec.java
 --- a/src/com/ibm/zurich/idmx/issuance/IssuanceSpec.java	2012-02-06 11:31:44.000000000 +0100
-+++ b/src/com/ibm/zurich/idmx/issuance/IssuanceSpec.java	2013-07-12 12:39:20.000000000 +0200
-@@ -58,6 +58,12 @@
-         pubKey = (IssuerPublicKey) StructureStore.getInstance().get(
-                 issuerPublicKeyId);
++++ b/src/com/ibm/zurich/idmx/issuance/IssuanceSpec.java	2013-07-26 15:31:17.191236613 +0200
+@@ -99,4 +99,11 @@
+         }
+         return context;
      }
-+    
-+    public IssuanceSpec(final URI ipkId, final URI theCredStructLocation, BigInteger ctx) {
-+    	this(ipkId, theCredStructLocation);
-+    	
-+    	context = ctx;
++
++    /**
++     * Set the context for this issuance specification.
++     */
++    public void setContext(BigInteger ctx) {
++        context = ctx;
 +    }
- 
-     /**
-      * @return Location of the credential structure.
+ }
 diff -Naur a/src/com/ibm/zurich/idmx/showproof/ProofSpec.java b/src/com/ibm/zurich/idmx/showproof/ProofSpec.java
---- a/src/com/ibm/zurich/idmx/showproof/ProofSpec.java	2013-05-08 11:20:09.479102077 +0200
-+++ b/src/com/ibm/zurich/idmx/showproof/ProofSpec.java	2013-07-12 17:30:28.356519799 +0200
-@@ -31,6 +31,8 @@
+--- a/src/com/ibm/zurich/idmx/showproof/ProofSpec.java	2013-07-26 15:27:32.489251978 +0200
++++ b/src/com/ibm/zurich/idmx/showproof/ProofSpec.java	2013-07-26 15:31:53.807234109 +0200
+@@ -30,6 +30,8 @@
+     private HashMap<String, Identifier> identifierMap;
      /** Predicates. */
      private final Vector<Predicate> predicates;
++    /** Session context. */
++    private BigInteger context;
  
-+    private final BigInteger context;
-+    
      /**
       * Constructor for proof specifications. Null arguments are initialized as
-      * length zero Vectors. The credentials will be cleared of private
-@@ -43,11 +45,22 @@
-      */
-     public ProofSpec(final HashMap<String, Identifier> theIdentifierMap,
-             final Vector<Predicate> thePredicates) {
-+    	this(theIdentifierMap, thePredicates, null);
-+    }
-+
-+    public ProofSpec(final HashMap<String, Identifier> theIdentifierMap,
-+            final Vector<Predicate> thePredicates, final BigInteger ctx) {
-         assert (thePredicates != null);
- 
-         predicates = thePredicates;
-         identifierMap = theIdentifierMap;
- 
-+        if (ctx == null) {
-+        	context = createContext();
-+        } else {
-+        	context = ctx;
-+        }
-+
-         validate();
-     }
- 
-@@ -153,7 +166,7 @@
-      * 
+@@ -154,23 +158,27 @@
       * @return value of spec's context.
       */
--    public final BigInteger getContext() {
-+    public final BigInteger createContext() {
-         Vector<BigInteger> contextVector = new Vector<BigInteger>();
- 
-         // add values of group parametes
-@@ -173,6 +186,10 @@
-         return Utils.hashOf(gp.getSystemParams().getL_H(), contextVector);
+     public final BigInteger getContext() {
+-        Vector<BigInteger> contextVector = new Vector<BigInteger>();
+-
+-        // add values of group parametes
+-        contextVector = Utils.computeGroupParamContext(gp, contextVector);
+-
+-        // add values of all issuer public keys (possibly multiple times)
+-        Iterator<Predicate> it = predicates.iterator();
+-        while (it.hasNext()) {
+-            Predicate predicate = it.next();
+-            if (predicate instanceof CLPredicate) {
+-                IssuerPublicKey pk = ((CLPredicate) predicate)
+-                        .getIssuerPublicKey();
+-                contextVector = Utils.computeKeyContext(pk, contextVector);
+-            }
+-        }
+-
+-        return Utils.hashOf(gp.getSystemParams().getL_H(), contextVector);
++    	if (context == null) {
++	        Vector<BigInteger> contextVector = new Vector<BigInteger>();
++	
++	        // add values of group parametes
++	        contextVector = Utils.computeGroupParamContext(gp, contextVector);
++	
++	        // add values of all issuer public keys (possibly multiple times)
++	        Iterator<Predicate> it = predicates.iterator();
++	        while (it.hasNext()) {
++	            Predicate predicate = it.next();
++	            if (predicate instanceof CLPredicate) {
++	                IssuerPublicKey pk = ((CLPredicate) predicate)
++	                        .getIssuerPublicKey();
++	                contextVector = Utils.computeKeyContext(pk, contextVector);
++	            }
++	        }
++	
++	        return Utils.hashOf(gp.getSystemParams().getL_H(), contextVector);
++    	} else {
++    		return context;
++    	}
      }
  
-+    public final BigInteger getContext() {
-+    	return context;
-+    }
-+    
      /**
-      * @return Human-readable description of this object.
-      */
+@@ -195,4 +203,10 @@
+ 
+     }
+ 
++    /**
++     * Set the context for the proof specification.
++     */
++    public void setContext(BigInteger ctx) {
++        context = ctx;
++    }
+ }
