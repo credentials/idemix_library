@@ -1,0 +1,46 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+version = '2.3.4'
+group = 'com.ibm.zurich.idmx'
+
+ext.idemix_archive = "IdentityMixer_2-3-4.zip"
+ext.idemix_dir     = "com.ibm.zurich.idmx.2_3_4/"
+ext.idemix_src_dir = idemix_dir + "src/"
+ext.patch_dir      = "patches/"
+
+sourceSets.main.java {
+    srcDir idemix_src_dir
+}
+
+def applyPatch(patchFile) {
+    ant.patch (
+        dir: idemix_dir,
+        strip: "1",
+        patchfile: patch_dir+patchFile
+    )
+}
+
+task prepare {
+    inputs.file idemix_archive
+    outputs.dir idemix_dir
+
+    doLast {
+        ant.unzip(src: idemix_archive, dest: ".")
+
+        applyPatch "BUG-proving-nonce-length.patch"
+        applyPatch "BUG-unsigned-byte-array-interpretation.patch"
+        applyPatch "FEATURE-allow-inputstream-as-input.patch"
+        applyPatch "FEATURE-context-as-parameter.patch"
+        applyPatch "FEATURE-nonce-as-parameter.patch"
+        applyPatch "SMARTCARD-negative-values.patch"
+        applyPatch "SMARTCARD-test-files.patch"
+        applyPatch "BUG-missing-default-case.patch"
+    }
+}
+compileJava.dependsOn prepare
+
+task cleanPatchedCode(type: Delete) {
+    delete idemix_dir
+}
+clean.dependsOn cleanPatchedCode

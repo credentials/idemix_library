@@ -8,8 +8,19 @@ cards.
 In order to use these patches you will have to download the sources yourself
 from the Identity Mixer homepage (https://prime.inf.tu-dresden.de/idemix/).
 
-Place the downloaded archive (IdentityMixer_2-3-4.zip) in this directory. To
-prepare the sources, that is apply the patches, run:
+Place the downloaded archive (IdentityMixer_2-3-4.zip) in this directory.
+
+## Building using Gradle (recommended)
+
+When you are using the Gradle build system, just run
+
+    gradle install
+
+to install the library to your local repository. This assumes you have downloaded the archive.
+
+## Building with Ant
+
+To prepare the sources, that is apply the patches, run:
 
     ant prepare
 

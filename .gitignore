@@ -1,10 +1,9 @@
 bin
-doc
-files
 src
-tests
 .classpath
 .project
+.gradle
+build
 
 *.bin
 *.zip
